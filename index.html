@@ -35,7 +35,11 @@
   <script src="https://cdn.datatables.net/1.10.25/js/dataTables.jqueryui.min.js"></script>
   <script src="https://cdn.datatables.net/scroller/2.0.3/js/dataTables.scroller.min.js"></script> 
   <script src="https://cdn.datatables.net/1.10.25/js/dataTables.material.min.js"></script> 
-  <style>
+  <style> 
+    #tableSenses, td, th {
+      border: 1px solid black;
+      width: 300px;
+    } 
     select#select {
   width: 100px;
   display: inline-block;
@@ -48,39 +52,21 @@
     <div class="dark-overlay">
       <div class="home-inner container">
         <div class="row">
-          <div class="col-lg-8 d-none d-lg-block">
-            <h1 class="display-4">Find <strong>Vaccines</strong> by Type, Pincode, Availability by Hospitals
-            </h1>
-            <div class="d-flex">
-              <div class="p-4 align-self-start">
-                <!-- <i class="fas fa-check fa-2x"></i> -->
-              </div>
-              <div class="p-4 align-self-end">
-                <!-- Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed, tempore iusto in minima facere dolorem! -->
-              </div>
-            </div>
-
-            <div class="d-flex">
-             <!-- <div class="p-4 align-self-start">-->
-                <!-- <i class="fas fa-check fa-2x"></i> -->
-              <!--</div>-->
-              <div class="p-4 align-self-end">
-                 
-              </div>
-            </div>
-
-            <div class="d-flex">
-               <!-- <div class="p-4 align-self-start"> 
-                
-              </div> 
-              <div class="p-4 align-self-end">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed, tempore iusto in minima facere dolorem! -->
-               <!-- </div>-->
-            </div>
+          <div class="col-lg-12">
+              
+            <h1>
+              Find Covid Vaccines by Type, PinCode, Vaccine Slot Availability in Hospitals
+            </h6>
+           
+          </div>
+          <div class="col-lg-8"> 
+             
+                <script type="text/javascript">amzn_assoc_ad_type ="responsive_search_widget"; amzn_assoc_tracking_id ="searc041-21"; amzn_assoc_marketplace ="amazon"; amzn_assoc_region ="IN"; amzn_assoc_placement =""; amzn_assoc_search_type = "search_widget";amzn_assoc_width ="auto"; amzn_assoc_height ="auto"; amzn_assoc_default_search_category =""; amzn_assoc_default_search_key ="covid";amzn_assoc_theme ="light"; amzn_assoc_bg_color ="FFFFFF"; </script><script src="//z-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&Marketplace=IN"></script>
+        
           </div>
 
           <div class="col-lg-4">
-            <div class="card bg-primary text-center card-form">
+            <div class="card bg-primary border-secondary mb-3 text-center card-form">
               <div class="card-body">
                 <h3>Search By State and City</h3>
                 <p>Please fill out this form to search</p>
@@ -103,9 +89,44 @@
       </div>
     </div>
   </header>
+  
   <section id="create-head-section">
     <div class="container">
       <div class="row">
+        <div class="col-lg-12"> 
+          <div class="card border-secondary mb-1 text-center card-form">
+            <div class="card-body">
+
+            <table class="mdl-data-table" style="width:100%">
+               
+              <th style="text-align: center;" colspan="6">
+                Efficancy Of Vaccines in India
+              </th>
+              <tr>
+                <td>
+                  COVAXIN (77.8%)
+                </td>
+                <td>
+                  COVISHIELD (63.09%)
+                </td>
+                <td>
+                  SPUTNIK V (92%)
+                </td>
+                <td>
+                  PFIZER BIONTECH (88% AFTER SECOND DOSE)
+                </td>
+                <td>
+                  MODERNA (90%)
+                </td> 
+                <td>
+                  JOHNSON & JOHNSON (66.3%)
+                </td> 
+              </tr>
+            </table>  
+            </div>
+            </div>
+            
+        </div> 
         <!-- <div class="col text-center py-5">
           <h1 class="display-4">Create</h1>
           <p class="lead">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente doloribus ut iure itaque quibusdam rem accusantium
