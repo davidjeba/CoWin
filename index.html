@@ -5,22 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/bootstrap.min.css"/>
-  <script src="searchScript.js"></script>
-  <!-- <link rel="stylesheet" href="css/bootstrap-grid.css"/>
-  <link rel="stylesheet" href="css/bootstrap.css"/>
-  <link rel="stylesheet" href="css/bootstrap.rtl.css"/>
-  <link rel="stylesheet" href="css/bootstrap.rtl.min.css"/>
-  <link rel="stylesheet" href="css/bootstrap-grid.min.css"/>
-  <link rel="stylesheet" href="css/bootstrap-grid.rtl.css"/>
-  <link rel="stylesheet" href="css/bootstrap-grid.rtl.min.css"/>
-  <link rel="stylesheet" href="css/bootstrap-reboot.css"/>
-  <link rel="stylesheet" href="css/bootstrap-reboot.min.css"/>
-  <link rel="stylesheet" href="css/bootstrap-reboot.rtl.css"/>
-  <link rel="stylesheet" href="css/bootstrap-reboot.rtl.min.css"/>
-  <link rel="stylesheet" href="css/bootstrap-utilities.css"/>
-  <link rel="stylesheet" href="css/bootstrap-utilities.min.css"/>
-  <link rel="stylesheet" href="css/bootstrap-utilities.rtl.css"/>
-  <link rel="stylesheet" href="css/bootstrap-utilities.rtl.min.css"/> -->
+  <script src="searchScript.js"></script> 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"/> 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>   
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css"/>
@@ -35,10 +20,7 @@
   <script src="https://cdn.datatables.net/1.10.25/js/dataTables.jqueryui.min.js"></script>
   <script src="https://cdn.datatables.net/scroller/2.0.3/js/dataTables.scroller.min.js"></script> 
   <script src="https://cdn.datatables.net/1.10.25/js/dataTables.material.min.js"></script> 
-  <style>  
-    select#select {
-  width: 100px;
-  display: inline-block;}
+  <style> 
   #efficacy{
     border:1px solid black;
   }
@@ -47,8 +29,7 @@
   }
   #efficacyTd{
     border:1px solid black;
-  }
-
+  } 
   </style>
   <title>Find Covid Vaccines by Type, PinCode, Vaccine Slot Availability in Hospitals</title>
 </head>
@@ -56,18 +37,13 @@
   <header id="home-section">
     <div class="dark-overlay">
       <div class="home-inner container">
-        <div class="row">  
-
-<center>
-        <h1 style="font-size:35px;line-height:48px;color:#282828;font-weight:400;min-height:48px" >Find Covid Vaccines by Type, PinCode, Vaccine Slot Availability in Hospitals</h1>
-      </center>          
- 
-          <div class="col-lg-8"> 
-             
-                <script type="text/javascript">amzn_assoc_ad_type ="responsive_search_widget"; amzn_assoc_tracking_id ="searc041-21"; amzn_assoc_marketplace ="amazon"; amzn_assoc_region ="IN"; amzn_assoc_placement =""; amzn_assoc_search_type = "search_widget";amzn_assoc_width ="auto"; amzn_assoc_height ="auto"; amzn_assoc_default_search_category =""; amzn_assoc_default_search_key ="covid";amzn_assoc_theme ="light"; amzn_assoc_bg_color ="FFFFFF"; </script><script src="//z-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&Marketplace=IN"></script>
-        
-          </div>
-
+        <div class="row">   
+          <center>
+            <h1 style="font-size:35px;line-height:48px;color:#282828;font-weight:400;min-height:48px" >Find Covid Vaccines by Type, PinCode, Vaccine Slot Availability in Hospitals</h1>
+          </center>           
+          <div class="col-lg-8">  
+                <script type="text/javascript">amzn_assoc_ad_type ="responsive_search_widget"; amzn_assoc_tracking_id ="searc041-21"; amzn_assoc_marketplace ="amazon"; amzn_assoc_region ="IN"; amzn_assoc_placement =""; amzn_assoc_search_type = "search_widget";amzn_assoc_width ="auto"; amzn_assoc_height ="auto"; amzn_assoc_default_search_category =""; amzn_assoc_default_search_key ="covid";amzn_assoc_theme ="light"; amzn_assoc_bg_color ="FFFFFF"; </script><script src="//z-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&Marketplace=IN"></script>        
+          </div> 
           <div class="col-lg-4">
             <div class="card bg-primary border-secondary mb-3 text-center card-form">
               <div class="card-body">
@@ -79,8 +55,7 @@
                     </select>
                   </div>
                   <div class="input-group mb-3">
-                    <select class="form-control" id="district-dropdown" name="district">
-               
+                    <select class="form-control" id="district-dropdown" name="district">               
                     </select>
                   </div> 
                   <input type="submit" value="Search" id="btnSearch" class="btn btn-outline-light btn-block">
@@ -188,92 +163,39 @@
 </html>
 
 <script>
-  $(document).ready(function () {
-          $('#example').DataTable({
-            // dom: "<'row'<'col-sm-5'l><'col-sm-7'f>>" +
-            //       "<'row'<'col-sm-12'tr>>" +
-            //       "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            //       language: {
-            //           search: "_INPUT_", //To remove Search Label
-            //           searchPlaceholder: "Search..."
-            //       },
-                  
- 
+  $(document).ready(function () 
+    {
+      var html = "";
+        var arrowButton = "";       
+        var dt = new Date(); 
+        for (i = 0 ; i < 7 ; i++){
+        var date,month; 
+        date=dt.getDate()+i;
+        month=dt.getMonth()+1;
+      
+        html += "<button class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";            
+        
+        arrowButton="&nbsp;&nbsp;<input type=radio id=eightAge name=fav_language value=18> 18+ &nbsp;<input type=radio id=fourtyAge name=fav_language value=45> 45+";          
+        }
+        let droValue=571;
+        var today = new Date();
+        var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+        $('#example').append('<caption style="caption-side: top;text-align:left">'+html+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ arrowButton+'</caption>');                  
+        //Default Record Load
+        myCommonFetcher(droValue,date);
+    
+
+    function myCommonFetcher(dropVal,dateVal ){
+
+      if(dropVal!="")
+      { 
+           $("#example").DataTable().destroy();
+           $('#example').DataTable({ 
                 ajax: {
-                    url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=571&date=19-06-2021',
+                    url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id='+dropVal+'&'+'date'+'='+dateVal,
                     dataSrc: "sessions"
                 },
-                columnDefs: [ {
-                      targets: [ 0 ],
-                      orderData: [ 0, 1 ]
-                  }, {
-                      targets: [ 1 ],
-                      orderData: [ 1, 0 ]
-                  }, {
-                      targets: [ 4 ],
-                      orderData: [ 4, 0 ]
-                  } ],
-                columns: [
-                    { data: 'name'},
-                    { data: 'pincode' },
-                    { data: "available_capacity",
-                      "render":function(data,Type,row){
-                        if ( row.vaccine === 'COVISHIELD') {
-                          
-                          return row.available_capacity;}
-                          else{
-                            return 0;
-                          }
-                      } 
-                  },
-                  { data: "available_capacity",
-                      "render":function(data,Type,row){
-                        if ( row.vaccine === 'COVAXIN') {
-                          return row.available_capacity;}
-                          else{
-                            return 0;
-                          }
-                      } 
-                  },
-                  { data: "available_capacity",
-                      "render":function(data,Type,row){
-                        if ( row.vaccine === 'SPUTNIK') {
-                          return row.available_capacity;}
-                          else{
-                            return 0;
-                          }
-                      } 
-                  }, 
-                    {data: 'fee' } 
-                ],
-                "pageLength": 10
-            });
-
-            // $(".dataTables_filter").append(select);
-            // $('.dataTables_filter').unbind().bind('keyup', function() {
-            //   var colIndex = document.querySelector('#select').selectedIndex;
-            //   table.column( colIndex).search( this.value ).draw();
-            // });
-
-            // $('#select').change(function() {
-            //   table.columns().search('').draw();
-            // });  
-
-
-          $("#btnSearch").on("click", function (e) {
-          e.preventDefault(); 
-          let droValue=document.getElementById("district-dropdown").value;
-          var today = new Date();
-          var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-          if(droValue!=""){ 
-          //const disurl = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id='+droValue+'&'+'date'+'='+date;
-          $("#example").DataTable().destroy();
-
-          $('#example').DataTable({
-                ajax: {
-                    url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id='+droValue+'&'+'date'+'='+date,
-                    dataSrc: "sessions"
-                },
+                "order": [[ 2, "desc" ]],
                 columns: [
                 { data: 'name', 
                   "render":function(data,type,row){                   
@@ -314,11 +236,31 @@
                 "pageLength": 10
                 
 
-            });
-          }else{
-            alert("Please Choose State and City Values")
-          }
+            }); 
+        }
+        else
+        {
+          alert("Please Choose State and City Values");
+        } 
+      }
 
-          });
-          });
+
+      $('#btnSearch').click(function(e){
+              e.preventDefault(); 
+              let droValue=document.getElementById("district-dropdown").value;
+              var today = new Date();
+              var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+                  
+              myCommonFetcher(droValue,date);
+            });
+      $('button').click(function(e){
+        e.preventDefault(); 
+        var fired_button = $(this).val();
+        var date = fired_button;
+        let droValue=document.getElementById("district-dropdown").value;   
+        myCommonFetcher(droValue,date);
+      });       
+  });
+    
+
 </script>
