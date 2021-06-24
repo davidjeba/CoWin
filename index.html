@@ -22,13 +22,13 @@
   <script src="https://cdn.datatables.net/1.10.25/js/dataTables.material.min.js"></script> 
   <style> 
   #efficacy{
-    border:1px solid black;
+    border:0px solid black;
   }
   #efficacyTr{
-    border:1px solid black;
+    border:0px solid black;
   }
   #efficacyTd{
-    border:1px solid black;
+    border:0px solid black;
   } 
   </style>
   <title>Find Covid Vaccines by Type, PinCode, Vaccine Slot Availability in Hospitals</title>
@@ -72,47 +72,67 @@
     <div class="container">
       <div class="row"> 
 
-            <table id="efficacy" class="mdl-data-table" style="width:100%" style="width:100%;">
+            <table id="efficacy" class="mdl-data-table"  style="width:100%;border-spacing: 20px;">
                
-              <th  style="text-align: center;" colspan="6">
-                Efficacy Of Vaccines in India
+              <th  style="text-align: center;" colspan="10">
+                <label style="font-weight:1000;font-size: 32px; text-align: center;">Helpline</label>
               </th>
               <tr id="efficacyTr">
-                <td id="efficacyTd">
-                  COVAXIN (77.8%)
+                <td rowspan="2" id="efficacyTd">
+                  <center><image src="img/phone.png" height=75 width=75 /></center>
                 </td>
                 <td id="efficacyTd">
-                  COVISHIELD (63.09%)
+                  <label style="font-weight: 1000;font-size: 18px; text-align: center;">Number</label>
+                </td>
+                <td rowspan="2" id="efficacyTd">
+                  <center><image src="img/healthminister.jpg" height=75 width=75 /></center>
                 </td>
                 <td id="efficacyTd">
-                  SPUTNIK V (92%)
+                  <label style="font-weight: 1000;font-size: 18px;text-align: center;">Health Ministry</label>
+                </td>
+                <td rowspan="2" id="efficacyTd">
+                  <center><image src="img/child.png" height=75 width=75 /></center>
                 </td>
                 <td id="efficacyTd">
-                  PFIZER BIONTECH (88% AFTER SECOND DOSE)
+                  <label style="font-weight: 1000;font-size: 18px;text-align: center;">Child</label>
+                </td>
+                <td rowspan="2" id="efficacyTd">
+                  <center><image src="img/mental health.png" height=75 width=75 /></center>
                 </td>
                 <td id="efficacyTd">
-                  MODERNA (90%)
+                  <label style="font-weight: 1000;font-size: 18px;text-align: center;">Mental Health</label>
+                </td>
+                <td rowspan="2" id="efficacyTd">
+                  <center><image src="img/senior citizen.jpg" height=75 width=75 /></center>
                 </td> 
                 <td id="efficacyTd">
-                  JOHNSON & JOHNSON (66.3%)
+                  <label style="font-weight: 1000;font-size: 18px;text-align: center;">Senior Citizens</label>
                 </td> 
               </tr>
-            </table>   
-             
-        <!-- <div class="col text-center py-5">
-          <h1 class="display-4">Create</h1>
-          <p class="lead">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente doloribus ut iure itaque quibusdam rem accusantium
-            deserunt reprehenderit sunt minus.</p>
-          <a href="#" class="btn btn-outline-light">Find Out More</a>
-        </div> -->
-        <!-- <select id="select" class="form-control input-sm">
-          <option>Seq.</option>
-          <option>Name</option>
-          <option>Position</option>
-          <option>Office</option>
-          <option>Start date</option>
-          <option>Salary</option>
-          </select> -->
+              <tr id="efficacyTr">
+               
+                <td id="efficacyTd">
+                  <a href="tel:91-11-23978046"><label style="font-weight: 1000;font-size: 18px; text-align: center;color:#0134A6;">91-11-23978046</label></a>
+                </td>
+          
+                <td id="efficacyTd">
+                  <a href="tel:1075"><label style="font-weight: 1000;font-size: 18px; text-align: center;color:#0134A6;">1075</label></a>
+                </td>
+            
+                <td id="efficacyTd">
+                  <a href="tel:1098"><label style="font-weight: 1000;font-size: 18px; text-align: center;color:#0134A6;">1098</label></a>
+                </td>
+         
+                <td id="efficacyTd">
+                  <a href="tel:08046110007"><label style="font-weight: 1000;font-size: 18px; text-align: center;color:#0134A6;">08046110007</label></a></td>
+                </td>
+                
+                <td id="efficacyTd">
+                  <!--  -->
+                  <a href="tel:14567"><label style="font-weight: 1000;font-size: 18px; color:#0134A6; text-align: center;">14567</label></a>
+                </td> 
+              </tr>
+            </table>    
         <table id="example" class="mdl-data-table" style="width:100%">
           <thead>
               <tr>
@@ -122,6 +142,7 @@
                   <th>Covaxin</th>
                   <th>Sputnik</th>
                   <th>Price</th>  
+                  <th>Age</th>
               </tr>
           </thead>
            <tbody> 
@@ -165,6 +186,8 @@
 <script>
   $(document).ready(function () 
     {
+      let selectedDate="";
+      let AllTableValue="";
       var html = "";
         var arrowButton = "";       
         var dt = new Date(); 
@@ -190,22 +213,21 @@
       if(dropVal!="")
       { 
            $("#example").DataTable().destroy();
-           $('#example').DataTable({ 
+           AllTableValue= $('#example').DataTable({ 
                 ajax: {
                     url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id='+dropVal+'&'+'date'+'='+dateVal,
                     dataSrc: "sessions"
                 },
-                "order": [[ 2, "desc" ]],
-                columns: [
-                { data: 'name', 
-                  "render":function(data,type,row){                   
-                    return data+" "+row.address;
-
+                "order": [[ 2, "desc" ]], 
+                columns: [                  
+                 { data: 'name', 
+                  function(data,type,row){                   
+                    return data+" "+row.address; 
                   }},
                     { data: 'pincode' },
                     { data: "available_capacity",
                       "render":function(data,Type,row){
-                        if ( row.vaccine === 'COVISHIELD') {
+                        if ( row.vaccine === 'COVISHIELD') {                          
                           return row.available_capacity;}
                           else{
                             return 0;
@@ -229,10 +251,13 @@
                             return 0;
                           }
                       } 
-                  }, 
-                    { data: 'fee'}
+                  },  
+                    { data: 'fee'},
+                    {data : "min_age_limit",
+                  'visible':false }
                      
                 ],
+              
                 "pageLength": 10
                 
 
@@ -250,16 +275,32 @@
               let droValue=document.getElementById("district-dropdown").value;
               var today = new Date();
               var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-                  
+              selectedDate=date;    
               myCommonFetcher(droValue,date);
             });
       $('button').click(function(e){
         e.preventDefault(); 
-        var fired_button = $(this).val();
+        
+        var fired_button = $(this).val(); 
         var date = fired_button;
+        selectedDate=date;
         let droValue=document.getElementById("district-dropdown").value;   
+        if(droValue!=""){
         myCommonFetcher(droValue,date);
-      });       
+      }else{
+        alert("Please Choose State and City Values");
+      }
+      });   
+       
+      $('#eightAge').click(function(e){
+        //var teenRadioValue = $(this).val();
+ 
+        AllTableValue.column(6).search('18').draw(); 
+      });
+      $('#fourtyAge').click(function(e){
+       // var tyRadioValue = $(this).val();
+        AllTableValue.column(6).search('45').draw();
+      });
   });
     
 
