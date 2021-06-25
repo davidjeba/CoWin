@@ -207,8 +207,10 @@
         date=dt.getDate()+i;
         month=dt.getMonth()+1;
         // let buttonID="button"+i;  
-        html += "<button id =buttonID class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";            
-        
+        if(i==0){
+        html += "<button id =buttonID style=background:lightgreen;color:white; class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";            
+      }
+        html += "<button id =buttonID class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";             
         arrowButton="&nbsp;&nbsp;<input type=radio id=eightAge name=fav_language value=18> 18+ &nbsp;<input type=radio id=fourtyAge name=fav_language value=45> 45+";          
         }
         let droValue=571;
@@ -269,7 +271,7 @@
                      
                 ],
               
-                "pageLength": 10
+                "pageLength": 50
                 
 
             }); 
