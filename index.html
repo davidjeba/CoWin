@@ -196,6 +196,7 @@
 <script>
   $(document).ready(function () 
     {
+      let clickCount = 0;
       let selectedDate="";
       let AllTableValue="";
       var html = "";
@@ -205,8 +206,8 @@
         var date,month; 
         date=dt.getDate()+i;
         month=dt.getMonth()+1;
-      
-        html += "<button class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";            
+        // let buttonID="button"+i;  
+        html += "<button id =buttonID class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";            
         
         arrowButton="&nbsp;&nbsp;<input type=radio id=eightAge name=fav_language value=18> 18+ &nbsp;<input type=radio id=fourtyAge name=fav_language value=45> 45+";          
         }
@@ -289,13 +290,26 @@
               myCommonFetcher(droValue,date);
             });
       $('button').click(function(e){
-        e.preventDefault(); 
-        
+        e.preventDefault();  
         var fired_button = $(this).val(); 
+        var date = new Date(); 
+        var parent=this; 
         var date = fired_button;
         selectedDate=date;
-        let droValue=document.getElementById("district-dropdown").value;   
+        let droValue=document.getElementById("district-dropdown").value;    
+       
         if(droValue!=""){
+          
+          if(clickCount>=1){ 
+            clickCount--;    
+            parent.style.background='#ffffff';
+            parent.style.color='black';
+            }
+            else{
+              parent.style.background='lightgreen';
+              parent.style.color='#ffffff';
+                clickCount++;
+            } 
         myCommonFetcher(droValue,date);
       }else{
         alert("Please Choose State and City Values");
