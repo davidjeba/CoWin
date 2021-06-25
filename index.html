@@ -234,8 +234,14 @@
                 "order": [[ 2, "desc" ]], 
                 columns: [                  
                  { data: 'name', 
-                  function(data,type,row){                   
-                    return data+" "+row.address; 
+                 "render":function(data,Type,row){
+                   {
+                    var Addspace="&nbsp;&nbsp;"; 
+                    var control="<a href=https://bit.ly/BookVaccination class='btn btn-outline-light'>Book Slot</a>"
+                    // return data+" "+row.address; 
+                    return data+" "+row.address+Addspace+control;
+                   }           
+                    
                   }},
                     { data: 'pincode' },
                     { data: "available_capacity",
