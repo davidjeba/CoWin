@@ -199,24 +199,50 @@
       let clickCount = 0;
       let selectedDate="";
       let AllTableValue="";
-      var html = "";
-        var arrowButton = "";       
-        var dt = new Date(); 
+      var intialhtml = "";
+      var html="";
+      var Calchtml="";
+      var arrowButton = "";       
+      var dt = new Date(); 
+      let inccount = 0;
         for (i = 0 ; i < 7 ; i++){
-        var date,month; 
-        date=dt.getDate()+i;
-        month=dt.getMonth()+1;
+          var date,month; 
+            date=dt.getDate()+i;
+            month=dt.getMonth()+1;
+            // if(i=0){
+            //   
+            // }
+
+            if(date>31){
+              for(j=0;j<7;j++){
+                date=j+1;
+                month=dt.getMonth()+2;
+                Calchtml += "<button id =buttonID class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";             
+              }           
+              break;   
+            }else{
+              if(inccount==0){
+                intialhtml += "<button id =buttonID style=background:lightgreen;color:white; class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";             
+                inccount++;
+              }else{
+                html += "<button id =buttonID class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";             
+              }
+              
+            }
+            
+
         // let buttonID="button"+i;  
-        if(i==0){
-        html += "<button id =buttonID style=background:lightgreen;color:white; class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";            
-      }
-        html += "<button id =buttonID class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";             
-        arrowButton="&nbsp;&nbsp;<input type=radio id=eightAge name=fav_language value=18> 18+ &nbsp;<input type=radio id=fourtyAge name=fav_language value=45> 45+";          
+        
+   
         }
+
+        intialhtml+=html+Calchtml;
+        arrowButton="&nbsp;&nbsp;<input type=radio id=eightAge name=fav_language value=18> 18+ &nbsp;<input type=radio id=fourtyAge name=fav_language value=45> 45+";          
+
         let droValue=571;
         var today = new Date();
         var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-        $('#example').append('<caption style="caption-side: top;text-align:left">'+html+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ arrowButton+'</caption>');                  
+        $('#example').append('<caption style="caption-side: top;text-align:left">'+intialhtml+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ arrowButton+'</caption>');                  
         //Default Record Load
         myCommonFetcher(droValue,date);
     
