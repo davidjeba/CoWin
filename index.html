@@ -143,16 +143,16 @@
                 </td> 
               </tr>
             </table>    
-        <table id="example" class="mdl-data-table" style="width:100%">
+        <table id="example" style="white-space: normal;" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
           <thead>
               <tr>
-                  <th>Hospital Name</th>
-                  <th>Pincode</th>
-                  <th>Covishield</th> 
-                  <th>Covaxin</th>
-                  <th>Sputnik</th>
-                  <th>Price</th>  
-                  <th>Age</th>
+                  <th style="width:40%">Hospital Name</th>
+                  <th style="width:10%">Pincode</th>
+                  <th style="width:10%">Covishield</th> 
+                  <th style="width:10%">Covaxin</th>
+                  <th style="width:10%">Sputnik</th>
+                  <th style="width:10%">Price</th>  
+                  <th style="width:10%">Age</th>
               </tr>
           </thead>
            <tbody> 
@@ -201,7 +201,7 @@
       let selectedDate="";
       let AllTableValue="";
       var intialhtml = "";
-      var html="";
+      var html=""; 
       var Calchtml="";
       var arrowButton = "";       
       var dt = new Date(); 
@@ -264,9 +264,12 @@
                  "render":function(data,Type,row){
                    {
                     var Addspace="&nbsp;&nbsp;"; 
-                    var control="<a href=https://bit.ly/BookVaccination class='btn btn-outline-light'>Book Slot</a>"
+                     var booklink="<a href=https://bit.ly/BookVaccination class='btn btn-outline-light'>Book Slot</a>"
                     // return data+" "+row.address; 
-                    return data+" "+row.address+Addspace+control;
+                    // var control="<table><tr><td>"+row.name+"</td></tr><tr><td>"+row.address+"</td></tr></table>"
+                     
+                    var control="<table><tr><td>"+row.name+"</td><td rowspan=2>"+booklink+"</td><td>&nbsp;</td></tr><tr><td>"+row.address+"</td><td> </td><td>&nbsp;</td></tr></table>"
+                    return control;
                    }           
                     
                   }},
