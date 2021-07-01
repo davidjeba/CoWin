@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/bootstrap.min.css"/>
-  <script src="searchScript.js"></script> 
+  <!-- <script src="searchScript.js"></script>  -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"/> 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>   
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css"/>
@@ -51,7 +51,7 @@
                 <p>Please fill out this form to search</p>
                 <form>
                   <div class="input-group mb-3">
-                    <select class="form-control" id="locality-dropdown" name="state" onchange="loadSelectedState(this.value)">                               
+                    <select class="form-control" id="locality-dropdown" name="state">                               
                     </select>
                   </div>
                   <div class="input-group mb-3">
@@ -227,14 +227,8 @@
                 inccount++;
               }else{
                 html += "<button id =buttonID class='btn btn-default text-center' value="+date+"-"+month+"-"+dt.getFullYear()+">"+date+"-"+month+"-"+dt.getFullYear()+"</button>";             
-              }
-              
-            }
-            
-
-        // let buttonID="button"+i;  
-        
-   
+              } 
+            } 
         }
 
         intialhtml+=html+Calchtml;
@@ -245,142 +239,198 @@
         var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
         $('#example').append('<caption style="caption-side: top;text-align:left">'+intialhtml+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ arrowButton+'</caption>');                  
         //Default Record Load
+        GetState();
         myCommonFetcher(droValue,date);
     
+      async function GetState(){
+        const api_url ="https://cdn-api.co-vin.in/api/v2/admin/location/states";
+        await getapi(api_url);
+      }    
 
-    function myCommonFetcher(dropVal,dateVal ){
-
-      if(dropVal!="")
-      { 
-           $("#example").DataTable().destroy();
-           AllTableValue= $('#example').DataTable({ 
-                ajax: {
-                    url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id='+dropVal+'&'+'date'+'='+dateVal,
-                    dataSrc: "sessions"
-                },
-                "order": [[ 2, "desc" ]], 
-                columns: [                  
-                 { data: 'name', 
-                 "render":function(data,Type,row){
-                   {
-                    var Addspace="&nbsp;&nbsp;"; 
-                     var booklink="<a href=https://bit.ly/BookVaccination class='btn btn-outline-light'>Book Slot</a>"
-                    // return data+" "+row.address; 
-                    // var control="<table><tr><td>"+row.name+"</td></tr><tr><td>"+row.address+"</td></tr></table>"
-                     
-                    var control="<table><tr><td>"+row.name+"</td><td rowspan=2>"+booklink+"</td><td>&nbsp;</td></tr><tr><td>"+row.address+"</td><td> </td><td>&nbsp;</td></tr></table>"
-                    return control;
-                   }           
-                    
-                  }},
-                    { data: 'pincode' },
-                    { data: "available_capacity",
-                      "render":function(data,Type,row){
-                        if ( row.vaccine === 'COVISHIELD') {                          
-                          if(row.available_capacity!=0){
-                            var Addspace="&nbsp;&nbsp;";
-                            var control="<table border=1 bordercolor=lightgray style=width:100px;><tr><td >D1</td><td rowspan=2 style=background:lightgreen;width:25px;text-align:center;>"+row.available_capacity+"</td><td>&nbsp;</td><td>D2</td></tr><tr><td>"+row.available_capacity_dose1+"</td><td>&nbsp;</td><td>"+row.available_capacity_dose2+"</td></tr></table>"
-                          }else{
-                            return 0;
-                          }
-                          return control;}
-                          else{
-                            return 0;
-                          }
-                      } 
+      async function getapi(url) {      
+        // Storing response
+        const response = await fetch(url);      
+        // Storing data in form of JSON
+        var data = await response.json();
+        console.log(data);       
+        loadSelect(data); 
+      }
+      function loadSelect(data){
+          let dropdown = $('#locality-dropdown');
+          $('#locality-dropdown').empty();
+          // dropdown.empty();
+          dropdown.append('<option selected="true" disabled>Choose State/Province</option>');
+          dropdown.prop('selectedIndex', 0); 
+          // Populate dropdown with list of provinces
+          for (let r of data.states) {
+            dropdown.append($('<option></option>').attr('value', r.state_id).text(r.state_name));
+          }
+      }       
+      function myCommonFetcher(dropVal,dateVal ){ 
+        if(dropVal!="")
+        { 
+            $("#example").DataTable().destroy();
+            AllTableValue= $('#example').DataTable({ 
+                  ajax: {
+                      url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id='+dropVal+'&'+'date'+'='+dateVal,
+                      dataSrc: "sessions"
                   },
-                  { data: "available_capacity",
-                      "render":function(data,Type,row){ 
-                      if ( row.vaccine === 'COVAXIN') {                          
-                          if(row.available_capacity!=0){
-                            var Addspace="&nbsp;&nbsp;";
-                            var control="<table border=1 bordercolor=lightgray style=width:100px;><tr><td >D1</td><td rowspan=2 style=background:lightgreen;width:25px;text-align:center;>"+row.available_capacity+"</td><td>&nbsp;</td><td>D2</td></tr><tr><td>"+row.available_capacity_dose1+"</td><td>&nbsp;</td><td>"+row.available_capacity_dose2+"</td></tr></table>"
-                          }else{
-                            return 0;
-                          }
-                          return control;}
-                          else{
-                            return 0;
-                          } 
-                        }
-                  },
-                  { data: "available_capacity",
-                      "render":function(data,Type,row){ 
-                      if ( row.vaccine === 'SPUTNIK V') {                          
-                          if(row.available_capacity!=0){
-                            var Addspace="&nbsp;&nbsp;";
-                            var control="<table border=1 bordercolor=lightgray style=width:100px;><tr><td >D1</td><td rowspan=2 style=background:lightgreen;width:25px;text-align:center;>"+row.available_capacity+"</td><td>&nbsp;</td><td>D2</td></tr><tr><td>"+row.available_capacity_dose1+"</td><td>&nbsp;</td><td>"+row.available_capacity_dose2+"</td></tr></table>"
-                          }else{
-                            return 0;
-                          }
-                          return control;}
-                          else{
-                            return 0;
-                          } 
+                  "order": [[ 2, "desc" ]], 
+                  
+                  columns: [                  
+                  { data: 'name', 
+                  "render":function(data,Type,row){
+                    {
+                      var Addspace="&nbsp;&nbsp;"; 
+                      var booklink="<a href=https://bit.ly/BookVaccination class='btn btn-outline-light'>Book Slot</a>"
+                      // return data+" "+row.address; 
+                      // var control="<table><tr><td>"+row.name+"</td></tr><tr><td>"+row.address+"</td></tr></table>"
+                      
+                      var control="<table><tr><td>"+row.name+"</td><td rowspan=2>"+booklink+"</td><td>&nbsp;</td></tr><tr><td>"+row.address+"</td><td> </td><td>&nbsp;</td></tr></table>"
+                      return control;
+                    }           
+                      
+                    }},
+                      { data: 'pincode' },
+                      { data: "available_capacity",
+                        "render":function(data,Type,row){
+                          if ( row.vaccine === 'COVISHIELD') {                          
+                            if(row.available_capacity!=0){
+                              var Addspace="&nbsp;&nbsp;";
+                              var control="<table border=1 bordercolor=lightgray style=width:100px;><tr><td >D1</td><td rowspan=2 style=background:lightgreen;width:25px;text-align:center;>"+row.available_capacity+"</td><td>&nbsp;</td><td>D2</td></tr><tr><td>"+row.available_capacity_dose1+"</td><td>&nbsp;</td><td>"+row.available_capacity_dose2+"</td></tr></table>"
+                            }else{
+                              return 0;
+                            }
+                            return control;}
+                            else{
+                              return 0;
+                            }
                         } 
-                  },  
-                    { data: 'fee'},
-                    {data : "min_age_limit",
-                  'visible':false }
-                     
-                ],
-              
-                "pageLength": 50
-                
-
-            }); 
+                    },
+                    { data: "available_capacity",
+                        "render":function(data,Type,row){ 
+                        if ( row.vaccine === 'COVAXIN') {                          
+                            if(row.available_capacity!=0){
+                              var Addspace="&nbsp;&nbsp;";
+                              var control="<table border=1 style=width:100px;><tr><td >D1</td><td rowspan=2 style=background:lightgreen;width:25px;text-align:center;>"+row.available_capacity+"</td><td>&nbsp;</td><td>D2</td></tr><tr><td>"+row.available_capacity_dose1+"</td><td>&nbsp;</td><td>"+row.available_capacity_dose2+"</td></tr></table>"
+                            }else{
+                              return 0;
+                            }
+                            return control;}
+                            else{
+                              return 0;
+                            } 
+                          }
+                    },
+                    { data: "available_capacity",
+                        "render":function(data,Type,row){ 
+                        if ( row.vaccine === 'SPUTNIK V') {                          
+                            if(row.available_capacity!=0){
+                              var Addspace="&nbsp;&nbsp;";
+                              var control="<table border=1 style=width:100px;><tr><td >D1</td><td rowspan=2 style=background:lightgreen;width:25px;text-align:center;>"+row.available_capacity+"</td><td>&nbsp;</td><td>D2</td></tr><tr><td>"+row.available_capacity_dose1+"</td><td>&nbsp;</td><td>"+row.available_capacity_dose2+"</td></tr></table>"
+                            }else{
+                              return 0;
+                            }
+                            return control;}
+                            else{
+                              return 0;
+                            } 
+                          } 
+                    },  
+                      { data: 'fee'},
+                      {data : "min_age_limit",
+                    'visible':false }
+                      
+                  ],                
+                  "pageLength": 50                   
+              }); 
+          }
+          else
+          {
+            alert("Please Choose State and City Values");
+          } 
         }
-        else
-        {
+        $('#locality-dropdown').on('change', function() {
+          const url = 'https://cdn-api.co-vin.in/api/v2/admin/location/districts/'+this.value;
+          getdistrictapi(url); 
+          // alert( this.value );
+        });
+         
+        $('#btnSearch').click(function(e){
+                e.preventDefault(); 
+                let droValue=document.getElementById("district-dropdown").value;
+                var today = new Date();
+                var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+                selectedDate=date;    
+                myCommonFetcher(droValue,date);
+              });
+        $('button').click(function(e){
+          e.preventDefault();  
+          var fired_button = $(this).val(); 
+          var date = new Date(); 
+          var parent=this; 
+          var date = fired_button;
+          selectedDate=date;
+          let droValue=document.getElementById("district-dropdown").value;    
+        
+          if(droValue!=""){
+            
+            if(clickCount>=1){ 
+              clickCount--;    
+              parent.style.background='#ffffff';
+              parent.style.color='black';
+              }
+              else{
+                parent.style.background='lightgreen';
+                parent.style.color='#ffffff';
+                  clickCount++;
+              } 
+          myCommonFetcher(droValue,date);
+        }else{
           alert("Please Choose State and City Values");
+        }
+        });   
+        
+        $('#eightAge').click(function(e){
+          //var teenRadioValue = $(this).val(); 
+          AllTableValue.column(6).search('18').draw(); 
+        });
+        $('#fourtyAge').click(function(e){
+        // var tyRadioValue = $(this).val();
+          AllTableValue.column(6).search('45').draw();
+        });
+
+        function loadSelectedState(value){  
+          let selectedState=value;
+          const url = 'https://cdn-api.co-vin.in/api/v2/admin/location/districts/'+selectedState;
+          getdistrictapi(url); 
+            
+        }
+          // Defining async function
+        async function getdistrictapi(d_url) 
+        {	
+          // Storing response
+          const response = await fetch(d_url);      
+          // Storing data in form of JSON
+          var data = await response.json();
+          console.log(data);
+          if (response) {
+            //hideloader();
+            loadDistrict(data);  
+          }               
+        }
+
+        function loadDistrict(data){
+          let dropdown = $('#district-dropdown');
+          $('#district-dropdown').empty();
+          // dropdown.empty();
+          dropdown.append('<option selected="true" disabled>Choose District/City</option>');
+          dropdown.prop('selectedIndex', 0);
+
+          for (let r of data.districts) {
+            dropdown.append($('<option></option>').attr('value', r.district_id).text(r.district_name));            
+          }
         } 
-      }
-
-
-      $('#btnSearch').click(function(e){
-              e.preventDefault(); 
-              let droValue=document.getElementById("district-dropdown").value;
-              var today = new Date();
-              var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-              selectedDate=date;    
-              myCommonFetcher(droValue,date);
-            });
-      $('button').click(function(e){
-        e.preventDefault();  
-        var fired_button = $(this).val(); 
-        var date = new Date(); 
-        var parent=this; 
-        var date = fired_button;
-        selectedDate=date;
-        let droValue=document.getElementById("district-dropdown").value;    
-       
-        if(droValue!=""){
-          
-          if(clickCount>=1){ 
-            clickCount--;    
-            parent.style.background='#ffffff';
-            parent.style.color='black';
-            }
-            else{
-              parent.style.background='lightgreen';
-              parent.style.color='#ffffff';
-                clickCount++;
-            } 
-        myCommonFetcher(droValue,date);
-      }else{
-        alert("Please Choose State and City Values");
-      }
-      });   
-       
-      $('#eightAge').click(function(e){
-        //var teenRadioValue = $(this).val();
- 
-        AllTableValue.column(6).search('18').draw(); 
-      });
-      $('#fourtyAge').click(function(e){
-       // var tyRadioValue = $(this).val();
-        AllTableValue.column(6).search('45').draw();
-      });
   });
     
 
